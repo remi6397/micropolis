@@ -48,6 +48,8 @@ public class BudgetDialog extends JDialog
 	JCheckBox autoBudgetBtn = new JCheckBox(strings.getString("budgetdlg.auto_budget"));
 	JCheckBox pauseBtn = new JCheckBox(strings.getString("budgetdlg.pause_game"));
 
+	int[] availableLoanAmounts = { 2000, 5000, 10000, 20000 };
+
 	private void applyChange()
 	{
 		int newTaxRate = ((Number) taxRateEntry.getValue()).intValue();
@@ -146,6 +148,8 @@ public class BudgetDialog extends JDialog
 		mainBox.add(sep2);
 
 		mainBox.add(makeOptionsPane());
+
+		mainBox.add(makeLoanPane());
 
 		JPanel buttonPane = new JPanel();
 		add(buttonPane, BorderLayout.SOUTH);
@@ -260,6 +264,35 @@ public class BudgetDialog extends JDialog
 		return optionsPane;
 	}
 
+	private JComponent makeLoanPane()
+	{
+		JPanel loanPane = new JPanel(new GridBagLayout());
+		loanPane.setBorder(BorderFactory.createEmptyBorder(8,0,0,0));
+
+		int buttonIndex = 0;
+
+		for (int amount : availableLoanAmounts) {
+			JButton loanButton = new JButton(formatFunds(amount));
+			loanButton.addActionListener(e -> {
+				engine.takeLoan(amount);
+				loanButton.setEnabled(engine.isLoanAvailable(amount));
+			});
+
+			loanButton.setEnabled(engine.isLoanAvailable(amount));
+
+			GridBagConstraints currentConstraints = new GridBagConstraints();
+			currentConstraints.gridx = buttonIndex % 2;
+			currentConstraints.gridy = buttonIndex / 2;
+			currentConstraints.anchor = GridBagConstraints.CENTER;
+			currentConstraints.weightx = 0.5;
+
+			loanPane.add(loanButton, currentConstraints);
+			buttonIndex++;
+		}
+
+		return loanPane;
+	}
+
 	private JComponent makeTaxPane()
 	{
 		JPanel pane = new JPanel(new GridBagLayout());
@@ -344,6 +377,8 @@ public class BudgetDialog extends JDialog
 		c0.gridy++;
 		balancePane.add(new JLabel(strings.getString("budgetdlg.operating_expenses")), c0);
 		c0.gridy++;
+		balancePane.add(new JLabel(strings.getString("budgetdlg.loan_payoff")), c0);
+		c0.gridy++;
 		balancePane.add(new JLabel(strings.getString("budgetdlg.cash_end")), c0);
 
 		c1.anchor = GridBagConstraints.EAST;
@@ -388,6 +423,11 @@ public class BudgetDialog extends JDialog
 			JLabel opExpensesLbl = new JLabel();
 			opExpensesLbl.setText(formatFunds(f.operatingExpenses));
 			balancePane.add(opExpensesLbl, c1);
+
+			c1.gridy++;
+			JLabel loanPayoffLbl = new JLabel();
+			loanPayoffLbl.setText(formatFunds(f.loanPayoff));
+			balancePane.add(loanPayoffLbl, c1);
 
 			c1.gridy++;
 			JLabel newBalanceLbl = new JLabel();

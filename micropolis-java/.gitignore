@@ -3,3 +3,5 @@ build
 docs/api
 graphics/generated
 .*.swp
+*.app
+.idea

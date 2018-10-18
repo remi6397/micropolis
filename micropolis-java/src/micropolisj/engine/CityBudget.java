@@ -8,6 +8,8 @@
 
 package micropolisj.engine;
 
+import java.util.ArrayList;
+
 public class CityBudget
 {
 	private final Micropolis city;
@@ -16,6 +18,17 @@ public class CityBudget
 	 * The amount of cash on hand.
 	 */
 	public int totalFunds;
+
+	static class Loan {
+		int initialAmount;
+		int amountToPayOff;
+		int monthlyPayoff;
+	}
+
+	/**
+	 * The loans that have to be paid off
+	 */
+	ArrayList<Loan> loans = new ArrayList<>();
 
 	/**
 	 * Amount of taxes collected so far in the current financial
