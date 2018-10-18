@@ -376,6 +376,11 @@ public class Micropolis
     public void takeLoan(int amount) {
         int monthlyPayoff = amount / 10;
         int additionalCharge = amount / 10;
+        switch (gameLevel) {
+            case 0: additionalCharge = amount / 10; break;
+            case 1: additionalCharge = (int)(amount / 9.2); break;
+            case 2: additionalCharge = (int)(amount / 8.4); break;
+        }
 
         CityBudget.Loan loan = new CityBudget.Loan();
         loan.initialAmount = amount;
