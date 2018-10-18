@@ -935,7 +935,6 @@ public class Micropolis
                 makeFlood();
                 break;
             case 4:
-                break;
             case 5:
                 makeTornado();
                 break;
@@ -948,6 +947,11 @@ public class Micropolis
                     makeMonster();
                 }
                 break;
+        }
+        switch (simSpeed) {
+            case FAST:
+            case SUPER_FAST:
+                setSpeed(Speed.PAUSED);
         }
     }
 

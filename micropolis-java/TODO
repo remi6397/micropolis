@@ -2,7 +2,7 @@ Micropolis::map[] array-
  *Consider changing type from 'char' to 'short'
 
 Finances-
- *Pay operating costs either every week or at the beginning of the year,
+ [Partially fixed with introduction of Loans] *Pay operating costs either every week or at the beginning of the year,
   instead of at the end of the year. This will fix an issue where it is
   possible to get negative money... just make your expenses exceed your
   income and run completely out of money.
@@ -16,7 +16,7 @@ On Game Load-
  *cityTime may not match history.cityTime
 
 Disasters-
- *When running FAST or SUPER_FAST, automatically pause or slow down the
+ [DONE] *When running FAST or SUPER_FAST, automatically pause or slow down the
   simulation when a disaster occurs.
  *Floods- should be allowed to flood zones, but I think this is currently
   not the case.
